@@ -68,10 +68,60 @@ parent(bob, charlie).
 % who are the parents of bob that dance? wirte in the prompt "parent(X,bob), dances(X)"
 
 %does carl have grandparents? write "parent(Y, carl), parent(X,Y)"
-% find out albert's grandchildren -> "parent(albert,X), parent(X,Y)"
+% finds out albert's grandchildren -> "parent(albert,X), parent(X,Y)"
 get_grandchild :-
     parent(albert, X),
     parent(X,Y),
     write('Alberts granchildren are: '),
     write(Y), nl. 
 %nl = new line
+
+get_grandparent :-
+    parent(X,carl),
+    parent(X,charlie),
+    %formating outputs
+    format('~w ~s grandparent ~n',[X,"is the"]). %writes
+    %~w -> variable | ~s -> string |~n -> new line
+
+brother(bob, bill).
+
+grand_parent(X,Y) :- %receives parameters - X:grandchild, Y-grandparent
+    parent(Z,X),
+    parent(Y,Z).
+
+blushes(X) :- human(X).
+human(derek). %blushed(derek) will also be true
+
+stabs(tybalt, mercutio, sword).
+hates(romeo, X) :- stabs(X, mercutio, sword).
+%when we use hates(romeo, X), pops back X= tybalt
+
+%checking the existence of a predicate: predicate(_) | ex.: male(_) -> true
+
+
+
+what_grade(5) :- %if the grade is 5, it will execute the next line
+    write('Go to kindergarten').
+
+what_grade(6) :- %if the grade is 5, it will execute the next line
+    write('Go to 1st Grade').
+
+what_grade(Other) :- %it works like an "else" statement, but it will be executed if the other statements above are also true
+    Grade is Other - 5, %Grande = Other-5
+    format('Go to grade ~w', [Grade]).
+
+
+
+%objects
+%has(albert,olive). -> it's confunsing, we don't know it it's a pet or a food
+owns(albert,pet(cat,olive)). %it's not confunsing anymore
+
+customer(tom, smith, 20.55).
+customer(sally, smith, 120.55). %customer(sally,_,Bal) -> we don't care for sally's last name. Her balance will be stored in the variable Bal
+
+get_cus_bal(Fname, Lname) :- %gets customer balance based on their first and last name
+    customer(Fname, Lname, Bal),
+    write(Fname), tab(1), %tab(1) -> add 1 space
+    format('~w owes us $~2f ~n', [Lname,Bal]). %2f -> two decimals | $ -> dolar sign(not from prolog)
+
+vetical(line(point(X, Y), point(X, Y2))). %we defined what it means to be vertical
