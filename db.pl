@@ -124,4 +124,42 @@ get_cus_bal(Fname, Lname) :- %gets customer balance based on their first and las
     write(Fname), tab(1), %tab(1) -> add 1 space
     format('~w owes us $~2f ~n', [Lname,Bal]). %2f -> two decimals | $ -> dolar sign(not from prolog)
 
-vetical(line(point(X, Y), point(X, Y2))). %we defined what it means to be vertical
+vertical(line(point(X, Y), point(X, Y2))). %we defined what it means to be vertical
+horizontal(line(point(X, Y), point(X2, Y))). %we defined what it means to be horizontal
+
+%vertical(line(point(5,10), X)) -> returns the point necessary to be vertical | point(5,_) -> "_" because it doesn't matter the Y2 value in this case
+
+
+%alice = alice -> true
+%'alice' = alice -> true
+
+% \+ -> not |example: \+(alice = albert) -> true, because they're different
+%other operators: > , < , >=, =<
+
+%rich(money, X) = rich(Y, no_debt) -> returns true. A variable can be asigned to anything. In this case, it will be true if we can asign no_debt to X and money to Y
+
+
+%TRACE -> shows step by step in the prompt (like a debugger). To activate it, just write "trace." after compiling. "notrace." to deactivate
+warm_blooded(penguin).
+warm_blooded(human).
+
+produce_milk(penguin).
+produce_milk(human).
+
+have_feathers(penguin).
+have_hair(human).
+
+mammal(X):-
+    warm_blooded(X),
+    produce_milk(X),
+    have_hair(X).
+
+
+
+%Recursion
+% related(X,Y):-
+%     parent(X,Y).
+
+related(X,Y):-
+    parent(X,Z), %is there a situation in which X is the parent of something Z (other than X and Y). Then, we see if Y is related to this Z.
+    related(Z,Y).
