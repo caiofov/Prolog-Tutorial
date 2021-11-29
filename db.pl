@@ -217,3 +217,35 @@ process_stream(Char, Stream) :- %if its not the end of the file, continue the pr
     get_char(Stream, Char2), %read another char
     process_stream(Char2, Stream).
 
+
+
+%LOOP
+count_to_10(10):- write(10), nl. %if we got 10 in our loop, it will stop looping and print the final result
+
+count_to_10(X):-
+    write(X),nl,
+    Y is X+1,
+    count_to_10(Y). %calls the function again with the variable incremented
+
+count_down(Low, High) :-
+    between(Low, High, Y),
+    Z is High - Y,
+    write(Z), nl.
+
+count_up(Low, High) :-
+    between(Low, High, Y),
+    Z is Y+Low,
+    write(Z), nl.
+
+
+
+guess_num :- loop(start).
+
+loop(15) :- write('You guessed it!').
+loop(X) :-
+    X \= 15,
+    write('Guess Number: '),
+    read(Guess),
+    write(Guess),
+    write(' is not the number'), nl,
+    loop(Guess).
