@@ -1,6 +1,7 @@
-random(0,20, rightNumber).
 
 start_game :- 
+    random(0,20, RightNumber),
+    rightNumber = RightNumber,
     guess.
 
 game(rightNumber) :- 

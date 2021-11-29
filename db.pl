@@ -93,8 +93,10 @@ grand_parent(X,Y) :- %receives parameters - X:grandchild, Y-grandparent
 blushes(X) :- human(X).
 human(derek). %blushed(derek) will also be true
 
-stabs(tybalt, mercutio, sword).
-hates(romeo, X) :- stabs(X, mercutio, sword).
+% commented because we need to use those predicates down there
+% stabs(tybalt, mercutio, sword).
+% hates(romeo, X) :- stabs(X, mercutio, sword).
+
 %when we use hates(romeo, X), pops back X= tybalt
 
 %checking the existence of a predicate: predicate(_) | ex.: male(_) -> true
@@ -249,3 +251,66 @@ loop(X) :-
     write(Guess),
     write(' is not the number'), nl,
     loop(Guess).
+
+
+%we can change our database via cmd, but we have to cast the predicates dynamically -> :- dynamic(predicate_name/number_of_parameters)
+
+:- dynamic(father/2). 
+:- dynamic(likes/2).
+:- dynamic(friend/2).
+:- dynamic(stabs/3).
+
+father(lord_montague, romeo).
+father(lord_montague, juliet).
+
+likes(mercutio, dancing).
+likes(benvolio, dancing).
+likes(romeo, dancing).
+likes(romeo, juliet).
+likes(juliet,romeo).
+likes(juliet,dancing).
+
+friend(romeo,mercutio).
+friend(romeo,benvolio).
+
+stabs(tybalt, mercutio, sword).
+stabs(romeo, tybalt, sword).
+
+
+%assert -> add a predicate to the database | example: assert(friend(benvolio, mercutio))
+%assertz -> add to the end | asserta -> add to the beginning
+% retract -> deletes | retractall -> example: retractall(father(_,_))
+
+% LISTS
+% [albert | [alice, bob]] adds albert to the begining of the list [alice, bob]
+%length(list, X) -> stores the length of the list in X
+
+% head/tail formats
+% [H|T] = [a,b,c] -> H = a, T = [b,c]
+% [X1,X2,X3,X4|T] = [1,b,c,d] -> X1 = 1, X2 = b, X3 = c, X4 = d, T = [].
+%[_, X2, _, _|T] = [a,b,c,d]. -> X2 = b, T = [].
+% [_,_,[X|Y], _, Z|T] = [a,b,[c,d,e],f,g,h]. -> X = c, Y = [d, e], Z = g, T = [h].
+
+% member(a, list) -> checks if element *a* is in list
+% member(X,list)-> cycles all elements of the list
+% reverse(list, X) -> reversed list stored in X
+% append(list1, list2, X) -> concats list and stores in X
+
+write_list([]).
+write_list([Head|Tail]) :- %shows all elements of the list
+    write(Head), nl,
+    write_list(Tail).
+
+
+%STRINGS
+% name(string, X) -> converts the string into ASCII chars and stores in X (list)
+% name(X, char_list) -> converts the char list into string again
+
+join_str(Str1, Str2, Str3):- %concats str1 anad str2 and stores in str3
+    name(Str1, StrList1),
+    name(Str2, StrList2),
+    append(StrList1, StrList2, StrList3),
+    name(Str3, StrList3).
+
+%nth0() -> inserts and element in an exact list index | example: nth0(0, List, FChar)
+%atom_length(string, X) -> gets string length and stores it in X
