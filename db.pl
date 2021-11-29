@@ -1,6 +1,7 @@
 /*knowledge base*/
 /*where we will storage all the rules*/
 % video: https://www.youtube.com/watch?v=SykxWpFwMGs
+%cmd -> "swipl" command
 
 loves(romeo,juliet).
 % loves -> a fact.
@@ -157,9 +158,62 @@ mammal(X):-
 
 
 %Recursion
-% related(X,Y):-
-%     parent(X,Y).
+related(X,Y):-
+    parent(X,Y).
 
 related(X,Y):-
     parent(X,Z), %is there a situation in which X is the parent of something Z (other than X and Y). Then, we see if Y is related to this Z.
     related(Z,Y).
+
+%related(Z, carl) -> returns all people realated to carl
+
+
+double_digit(X,Y):- %returns X * 2
+    Y is X*2.
+
+%random(0,10,X) -> generates a random value between 0 and 10 and stores in X
+%between(0,10,X) -> gets ALL the values between 0 and 10.
+%succ(2,X) -> add +1 to "2" and stores in X
+%abs(-8,X) -> absolute value
+% X is max(10,5) -> max value
+% X is min(10,5) -> min value
+%round() -> rounds | truncate() -> truncates | floor(), ceiling() ...
+
+is_even(X) :-
+    Y is X//2, %interger division
+    X =:= 2*Y.
+
+
+%INPUT AND OUTPUT
+
+say_hi :-
+    write('What is your name? '),
+    read(X), %reads a string
+    write('Hi, '),
+    write(X).
+
+fav_char :-
+    write('What is your favorite character?'),
+    get(X),  % reads a char
+    format('The Ascii value ~w is ',[X]),
+    put(X), nl.
+
+%FILES
+
+write_to_file(File, Text) :-
+    open(File, write, Stream), %opens a file to be written at and stores the stream
+    write(Stream, Text), nl,
+    close(Stream).
+
+read_file(File) :-
+    open(File, read, Stream), %opens a file to be read
+    get_char(Stream, Char1),
+    process_stream(Char1, Stream), %function to see if we got to the end of the file 
+    close(Stream).
+
+process_stream(end_of_file, _) :- !. %checks if we got to the end of the file and stops ("!")
+process_stream(Char, Stream) :- %if its not the end of the file, continue the process
+    write(Char), %writes out the char read
+    get_char(Stream, Char2), %read another char
+    process_stream(Char2, Stream).
+
